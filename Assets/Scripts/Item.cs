@@ -17,7 +17,7 @@ public class Item : MonoBehaviour
 
     private void Awake()
     {
-        inventoryManager = GameObject.Find("InventoryCanvas").GetComponent<InventoryManager>();
+        inventoryManager = UIManager.Instance.inventoryCanvas.GetComponent<InventoryManager>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

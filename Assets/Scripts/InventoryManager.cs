@@ -21,8 +21,6 @@ public class InventoryManager : MonoBehaviour
             }
         
         }
-    
-    
     }
     public int AddItem(string itemName, int quantity, Sprite itemSprite, string description)
     {
@@ -33,14 +31,13 @@ public class InventoryManager : MonoBehaviour
                 int leftOverItems = itemSlot[i].Additem(itemName,quantity,itemSprite, description);
                 if (leftOverItems > 0)
                 {
-                    leftOverItems = AddItem(itemName, quantity, itemSprite, description);
+                    leftOverItems = AddItem(itemName, leftOverItems, itemSprite, description);
                 }
                 return leftOverItems;
             }
         }
         return quantity;
     }
-
     public void DeSelectAllSlots()
     {
         for (int i = 0; i < itemSlot.Length; i++)

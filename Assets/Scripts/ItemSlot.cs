@@ -24,16 +24,15 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
     public GameObject selectedShader;
     [SerializeField]
     private int maxNumberOfStack;
+    [SerializeField]
+    private Sprite emptySprite;
 
     public bool isItemSelected;
     //-----------------------------
     public Image descItemImage;
     public TMP_Text descItemNameText;
     public TMP_Text descItemText;
-
-
-
-
+    
 
     private void Awake()
     {
@@ -87,17 +86,39 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler
 
     private void OnLeftClick()
     {
-        if (isItemSelected)
+        if (isItemSelected && this.quantity > 0)
         {
             inventoryManager.UseItem(itemName);
+            this.quantity -= 1;
+            quantityText.text = this.quantity.ToString();
+            if (this.quantity <= 0)
+            {
+                EmptySlot();
+            }
         }
-        
-        inventoryManager.DeSelectAllSlots();
-        selectedShader.SetActive(true);
-        isItemSelected = true;
-        descItemNameText.text = itemName;
-        descItemText.text = itemDescription;
-        descItemImage.sprite = itemSprite;
+        else
+        {
+            inventoryManager.DeSelectAllSlots();
+            selectedShader.SetActive(true);
+            isItemSelected = true;
+            descItemNameText.text = itemName;
+            descItemText.text = itemDescription;
+            descItemImage.sprite = itemSprite;
+            if (descItemImage.sprite == null)
+            {
+                descItemImage.sprite = null;
+            }
+        }
+    }
+
+    private void EmptySlot()
+    {
+        quantityText.enabled = false;
+        itemImage.sprite = null;
+        descItemNameText.text = "";
+        descItemText.text = "";
+        descItemImage.sprite = null;
+
     }
 
     private void OnRightClick()
